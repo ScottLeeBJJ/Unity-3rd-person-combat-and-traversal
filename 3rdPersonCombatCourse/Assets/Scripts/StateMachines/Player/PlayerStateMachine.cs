@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        SwitchState(new PlayerTestState(this));
     }
 }
