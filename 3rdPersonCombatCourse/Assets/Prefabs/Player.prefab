@@ -2545,6 +2545,7 @@ MonoBehaviour:
   <Controller>k__BackingField: {fileID: 4297219300661805480}
   <Animator>k__BackingField: {fileID: 6575587705714682788}
   <FreeLookMovementSpeed>k__BackingField: 6
+  <RotationDamping>k__BackingField: 10
 --- !u!95 &6575587705714682788
 Animator:
   serializedVersion: 4
