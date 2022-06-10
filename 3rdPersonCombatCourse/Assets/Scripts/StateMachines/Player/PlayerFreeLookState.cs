@@ -58,4 +58,6 @@ public class PlayerFreeLookState : PlayerBaseState
             Quaternion.LookRotation(movement),
             deltaTime * stateMachine.RotationDamping);
     }
+
+    
 }
