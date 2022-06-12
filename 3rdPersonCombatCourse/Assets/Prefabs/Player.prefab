@@ -2620,6 +2620,7 @@ MonoBehaviour:
   <InputReader>k__BackingField: {fileID: 1199697865572732832}
   <Controller>k__BackingField: {fileID: 4297219300661805480}
   <Animator>k__BackingField: {fileID: 6575587705714682788}
+  <Targeter>k__BackingField: {fileID: 952358724881533790}
   <FreeLookMovementSpeed>k__BackingField: 6
   <RotationDamping>k__BackingField: 10
 --- !u!95 &6575587705714682788

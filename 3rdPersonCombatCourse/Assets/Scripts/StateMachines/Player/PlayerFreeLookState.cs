@@ -19,27 +19,28 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         Vector3 movement = CalculateMovement();
 
-
         stateMachine.Controller.Move(movement * stateMachine.FreeLookMovementSpeed * deltaTime);
 
-        if (stateMachine.InputReader.MovementValue == Vector2.zero) 
+        if (stateMachine.InputReader.MovementValue == Vector2.zero)
         {
-            stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0, AnimatorDampTime, deltaTime); 
-            return;        
+            stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
+            return;
         }
 
-        stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime); 
+        stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime);
+
         FaceMovementDirection(movement, deltaTime);
     }
 
     public override void Exit()
     {
         stateMachine.InputReader.TargetEvent -= OnTarget;
-
     }
 
     private void OnTarget()
     {
+        if (!stateMachine.Targeter.SelectTarget()) { return; }
+
         stateMachine.SwitchState(new PlayerTargetingState(stateMachine));
     }
 
@@ -54,15 +55,16 @@ public class PlayerFreeLookState : PlayerBaseState
         forward.Normalize();
         right.Normalize();
 
-
-        return forward * stateMachine.InputReader.MovementValue.y + right * stateMachine.InputReader.MovementValue.x;
+        return forward * stateMachine.InputReader.MovementValue.y +
+            right * stateMachine.InputReader.MovementValue.x;
     }
 
     private void FaceMovementDirection(Vector3 movement, float deltaTime)
     {
         stateMachine.transform.rotation = Quaternion.Lerp(
-            stateMachine.transform.rotation, 
+            stateMachine.transform.rotation,
             Quaternion.LookRotation(movement),
             deltaTime * stateMachine.RotationDamping);
     }
 }
+
