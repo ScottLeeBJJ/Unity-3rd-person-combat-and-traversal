@@ -7,6 +7,8 @@ public class PlayerTargetingState : PlayerBaseState
     public PlayerTargetingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     private readonly int TargetingBlendTreeHash = Animator.StringToHash("TargetingBlendTree");
+    private readonly int TargetingForwardHash = Animator.StringToHash("TargetingForward");
+    private readonly int TargetingRightHash = Animator.StringToHash("TargetingRight");
 
 
     public override void Enter()
@@ -25,8 +27,10 @@ public class PlayerTargetingState : PlayerBaseState
         }
 
         Vector3 movement = CalculateMovement();
-        
+
         Move(movement * stateMachine.TargetingMovementSpeed, deltaTime);
+
+        UpdateAnimator(deltaTime);
 
         FaceTarget();
     }
@@ -51,6 +55,29 @@ public class PlayerTargetingState : PlayerBaseState
         movement += stateMachine.transform.forward * stateMachine.InputReader.MovementValue.y;
         
         return movement;
+    }
+
+    private void UpdateAnimator(float deltaTime)
+    {
+        if(stateMachine.InputReader.MovementValue.y == 0)
+        {
+            stateMachine.Animator.SetFloat(TargetingForwardHash, 0, 0.1f, deltaTime);
+        }
+        else
+        {
+            float value = stateMachine.InputReader.MovementValue.y > 0 ? 1f : -1f;
+            stateMachine.Animator.SetFloat(TargetingForwardHash, value, 0.1f, deltaTime);
+        }
+
+        if(stateMachine.InputReader.MovementValue.x == 0)
+        {
+            stateMachine.Animator.SetFloat(TargetingRightHash, 0, 0.1f, deltaTime);
+        }
+        else
+        {
+            float value = stateMachine.InputReader.MovementValue.y > 0 ? 1f : -1f;
+            stateMachine.Animator.SetFloat(TargetingRightHash, value, 0.1f, deltaTime);
+        }
     }
 }
 
